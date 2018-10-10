@@ -10,24 +10,19 @@
 <body>
 шапка
 <hr>
-<?php
-foreach ($news as $new){ ?>
-    <a href="post.php?fname=<?= $new['title']; ?>"><?= $new['title']; ?></a><br>
-<?php } ?>
+<?foreach($news as $new): ?>
+    <a href="post.php?fname=<?=$new['title']?>"><?=$new['title']?></a><br>
+<?endforeach;?>
 <a href="add.php">Добавить новость</a>
 <a href="edit1.php">Редактировать</a>
-<?php
-$login = mylog();
-if($login){
-    echo  "<a href=\"logout.php\">Выйти</a>";
-}
-elseif (isset($_COOKIE['name']) && isset($_COOKIE['password'])){
-    echo  "<a href=\"logout.php\">Выйти</a>";
-}
-else{
-    echo "<a href=\"login.php\">Войти</a>";
-}
-?>
+<?if($login):?>
+    <a href="logout.php">Выйти</a>
+<?elseif(isset($_COOKIE['name']) && isset($_COOKIE['password'])):?>
+    <a href="logout.php">Выйти</a>
+
+<?else:?>
+    <a href="login.php">Войти</a>
+<?endif?>
 <hr>
 Подвал
 </body>

@@ -1,6 +1,6 @@
 <?php
+session_start();
 include_once ('model/news.php');
-myLog();
 $login = myLog();
 if(!$login){
     header('Location:login.php');
@@ -14,31 +14,18 @@ if(count($_POST) > 0){
     $title1 = isset($_GET['fname']) ? trim($_GET['fname']) : false;
     $del = isset($_POST['delete']) ? true : false;
     $id = isset($_GET['id']) ? true : false;
+    $contents =  get_descr($db,$title1);
     if($del){
         news_del($db,$title1);
         header('Location:edit1.php');
         exit();
     }
     $istitle = uniqTitle($db,$title);
-
-    if(!$title || !$descr && !$del){
-        $msg = 'Заполните все поля:';
-        if(!$title) {
-            $msg .= ' title';
+    $errors = news_validate($title,$descr,$istitle);
+    if(count($errors) > 0) {
+        foreach ($errors as $error) {
+            echo "<p>$error</p>";
         }
-
-        if(!$descr) {
-            $msg .= ' description';
-        }
-        echo $msg .'<br/>';
-    }
-
-    if ($title && !check_title($title)){
-        echo  "Только латинские буквы и цифры!<br/>";
-    }
-
-    if($istitle == '0'){
-        echo "Такой файл уже существует!<br/>";
     }
     else {
         if($title1){
@@ -51,6 +38,7 @@ if(count($_POST) > 0){
 else{
     $title1 = $_GET['fname'];
     $contents =  get_descr($db,$title1);
+    $errors = [];
     if(!isset($title1)){
         echo 'не передано название.ошибка';
     }

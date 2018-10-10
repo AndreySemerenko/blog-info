@@ -1,9 +1,8 @@
 <form method="post">
     Название: <br>
-    <input type="text" name="title" value="<?php echo $title;?>"><br>
+    <input type="text" name="title" value="<?=$title?>"><br>
     Напишите текст статьи: <br>
-    <textarea name="descr" cols="30" rows="10" ><?php echo $descr; ?></textarea><br>
+    <textarea name="descr" cols="30" rows="10" ><?=$descr?></textarea><br>
     <input type="submit">
 </form>
 
-<?php echo $msg; ?>

@@ -1,6 +1,6 @@
 <?php
+session_start();
 include_once ('model/news.php');
-mylog();
 $login = myLog();
 if(!$login){
     header('Location:login.php');
@@ -12,26 +12,21 @@ if(count($_POST) > 0){
     $title = trim($_POST['title']);
     $descr = trim($_POST['descr']);
     $istitle = uniqTitle($db,$title);
-
-   if($title == '' || $descr == ''){
-       $msg = "Заполните все поля";
-   }
-   elseif (!check_title($title)){
-       $msg =  "Только латинские буквы и цифры!";
-   }
-   elseif($istitle == '0'){
-       $msg = "Такой файл уже существует!";
-   }
-   else{
+    $errors = news_validate($title,$descr,$istitle);
+   if(count($errors) > 0) {
+       foreach ($errors as $error) {
+           echo "<p>$error</p>";
+       }
+   } else{
        news_add($db,$title,$descr);
        header('Location:index.php');
        exit();
    }
-}
-else{
+} else{
     $title = '';
     $descr = '';
     $msg = 'write';
+    $errors = [];
 }
 include_once ('view/v_add.php');
 

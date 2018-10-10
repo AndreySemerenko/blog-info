@@ -14,7 +14,6 @@ function news_all($db){
 }
 function myLog(){
     if(!(isset($_SESSION['log']) && $_SESSION['log'])){
-        session_start();
         if(isset($_COOKIE['name']) == hash('sha256','admin') &&  isset($_COOKIE['password']) == hash('sha256','qwerty')){
             return $_SESSION['log'] = true;
         }
@@ -23,7 +22,7 @@ function myLog(){
         }
     }
     else{
-        return true;
+        return  true;
     }
 }
 function uniqTitle($db,$title){
@@ -80,7 +79,7 @@ function get_descr($db,$title1){
     if($query->errorCode() != PDO::ERR_NONE){
         $info->$query->errorInfo();
         echo implode('<br>',$info);
-        die();
+        die;
     }
     $contents = $query->fetch()['descr'];
     return $contents;
@@ -90,3 +89,19 @@ function db_connect(){
     $db->exec('SET NAME UTF8');
     return $db;
 }
+ function news_validate($title,$descr,$istitle){
+    $errors = [];
+    if($title =''){
+        $errors[] = "Заполните имя ";
+    }
+    elseif($descr = ''){
+        $errors[] = "Заполните контент ";
+    }
+    elseif (check_title($title)){
+        $errors[] =  "Только латинские буквы и цифры!";
+    }
+    elseif ($istitle == 0){
+        $errors[] = "Такой файл уже существует!";
+    }
+    return $errors;
+ }

@@ -1,13 +1,15 @@
 <?php
+session_start();
 include_once ('model/news.php');
-mylog();
 $login = myLog();
 if($login){
     header("Location:index.php");
     die;
 }
 if(count($_POST) > 0){
-    if($_POST['name'] == 'admin' && $_POST['password'] == 'qwerty'){
+    $name = $_POST['name'];
+    $password = $_POST['password'];
+    if($name == 'admin' && $password == 'qwerty'){
         $_SESSION['log'] = true;
         if(isset($_POST['remember'])){
             setcookie('name',hash('sha256','admin'),time() + 3600 * 24 * 7 ,'/');
@@ -23,8 +25,8 @@ if(count($_POST) > 0){
 }
 else{
     unset($_SESSION['log']);
-    setcookie('name',hash('sha256','admin'),time(),'/');
-    setcookie('password',hash('sha256','qwerty'),time(),'/');
+    setcookie('name','',time(),-1);
+    setcookie('password','',time() - 1);
 
 }
 

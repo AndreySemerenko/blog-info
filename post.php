@@ -1,7 +1,8 @@
 <?php
-include_once ('model/news.php');
 session_start();
-if(!myLog()){
+include_once ('model/news.php');
+$login = mylog();
+if(!$login){
     header('Location:login.php');
     die;
 }
