@@ -80,3 +80,7 @@ footer .copy{line-height: 50px;}
 @media screen and (max-width: 390px){
 	.content aside .col.fl-l, .content aside .col.fl-r{float: none;}
 }
+#content{
+	padding: 20px;
+	line-height: 2.5em;
+}

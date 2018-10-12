@@ -1,4 +1,4 @@
-<div class="content">
+<div id="content">
     <form method="post">
         Название: <br>
         <input type="text" name="title" value="<?=$title1?>"><br>

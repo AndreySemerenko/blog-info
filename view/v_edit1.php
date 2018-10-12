@@ -1,4 +1,4 @@
-<div class="content">
+<div id="content">
     <h3>Редактирование статей</h3>
     <hr>
     <? foreach ($list as $list_one): ?>

@@ -1,4 +1,4 @@
-<div class="content">
+<div id="content">
     <?foreach($news as $new): ?>
         <a href="post.php?fname=<?=$new['title'];?>"><?=$new['title']?></a><br>
     <?endforeach;?>
