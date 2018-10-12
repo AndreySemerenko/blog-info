@@ -32,10 +32,10 @@ function uniqTitle($db,$title){
     $res = $query2->fetch();
 
     if(!$res){
-        return $istitle = '1';
+        return $istitle = true;
     }
     else{
-        return $istitle = '0';
+        return $istitle = false;
     }
 }
 function news_add($db,$title,$descr){
@@ -100,7 +100,7 @@ function db_connect(){
     elseif (check_title($title)){
         $errors[] =  "Только латинские буквы и цифры!";
     }
-    elseif ($istitle == 0){
+    elseif (!$istitle){
         $errors[] = "Такой файл уже существует!";
     }
     return $errors;
