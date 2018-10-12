@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once ('model/news.php');
+include_once ('model/database.php');
+include_once ('model/system.php');
 $login = myLog();
 if(!$login){
     header('Location:login.php');
@@ -28,5 +30,7 @@ if(count($_POST) > 0){
     $msg = 'write';
     $errors = [];
 }
-include_once ('view/v_add.php');
+$content = template('view/v_add.php',['title' => $title, 'descr' => $descr]);
+$html = template('view/v_main.php',['content' => $content,'title' => 'Добавить новость']);
+echo $html;
 

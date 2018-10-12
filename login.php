@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once ('model/news.php');
+include_once ('model/database.php');
+include_once ('model/system.php');
 $login = myLog();
 if($login){
     header("Location:index.php");
@@ -31,5 +33,7 @@ else{
 }
 
 
-include_once ('view/v_login.php');
+$content = template('view/v_login.php');
+$html = template('view/v_main.php',['content' => $content,'title' => 'Авторизация пользователя']);
+echo $html;
 

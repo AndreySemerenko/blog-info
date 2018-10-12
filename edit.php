@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once ('model/news.php');
+include_once ('model/database.php');
+include_once ('model/system.php');
 $login = myLog();
 if(!$login){
     header('Location:login.php');
@@ -42,15 +44,17 @@ else{
     if(!isset($title1)){
         echo 'не передано название.ошибка';
     }
-    elseif(!(check_title($title1))){
-       echo  "Только латинские буквы и цифры!";
+    elseif((check_title($title1))){
+       echo  "Только русские буквы и цифры!";
     }
 
      elseif(!$title1){
      echo "Файл не найден";
 }
 }
-include_once ('view/v_edit.php');
+$content = template('view/v_edit.php',['title1' => $title1,'contents' => $contents]);
+$html = template('view/v_main.php',['content' => $content,'title' => 'Редактировать новость']);
+echo $html;
 
 
 
