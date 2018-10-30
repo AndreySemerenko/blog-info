@@ -24,7 +24,7 @@
 					<nav>
 						<div class="show_menu">Меню</div>
 						<ul>
-							<li><a href="#">Главная</a></li>
+							<li><a href="/">Главная</a></li>
 							<li><a href="#">О компании</a></li>
 							<li><a href="#">Продукты</a></li>
 							<li><a href="#">Услуги</a></li>
@@ -37,6 +37,7 @@
 		<section>
 			<div class="content line">
 				<div class="wrapper">
+                    <h1><?=$title?></h1>
 					<?=$content?>
 				</div>
 			</div>

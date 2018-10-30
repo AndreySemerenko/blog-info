@@ -1,15 +1,15 @@
 <div id="content">
     <?foreach($news as $new): ?>
-        <a href="post.php?fname=<?=$new['title'];?>"><?=$new['title']?></a><br>
+        <a href="/post?fname=<?=$new['title'];?>"><?=$new['title']?></a><br>
     <?endforeach;?>
-    <a href="add.php">Добавить новость</a>
-    <a href="edit1.php">Редактировать</a>
+    <a href="/add">Добавить новость</a>
+    <a href="/edit1">Редактировать</a>
     <?if($login):?>
-        <a href="logout.php">Выйти</a>
+        <a href="/logout">Выйти</a>
     <?elseif(isset($_COOKIE['name']) && isset($_COOKIE['password'])):?>
-        <a href="logout.php">Выйти</a>
+        <a href="/logout">Выйти</a>
 
     <?else:?>
-        <a href="login.php">Войти</a>
+        <a href="/login">Войти</a>
     <?endif?>
 </div>

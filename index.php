@@ -1,12 +1,11 @@
 <?php
 session_start();
-include_once ('model/news.php');
-include_once ('model/database.php');
-include_once ('model/system.php');
-$login = mylog();
-$db = db_connect();
-$news = news_all($db);
-$content = template('view/v_index.php',['news' => $news, 'login' => $login]);
-$html = template('view/v_main.php',['content' => $content,'title' => 'Новости']);
-echo $html;
+function __autoload($name)
+{
+    include_once str_replace("\\",DIRECTORY_SEPARATOR,$name) . ".php";
+}
+$request = new Core\Request($_GET,$_POST,$_SERVER);
+$app = new Core\App($request);
+$app->go();
+
 
