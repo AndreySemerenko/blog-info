@@ -22,12 +22,12 @@ class ArticleController extends BaseController
             header('Location:/login');
             die;
         }
-        if(count($this->request->post) > 0){
-            $title = (trim($this->request->post['title']) != '') ? trim($this->request->post['title']) : false;
-            $descr = (trim($this->request->post['descr']) != '') ? trim($this->request->post['descr']) : false;
-            $title1 = isset($this->request->get['fname']) ? trim($this->request->get['fname']) : false;
-            $del = isset($this->request->post['delete']) ? true : false;
-            $id = isset($this->request->get['id']) ? true : false;
+        if(count($this->request->getPost()) > 0){
+            $title = (trim($this->request->getPost()['title']) != '') ? trim($this->request->getPost()['title']) : false;
+            $descr = (trim($this->request->getPost()['descr']) != '') ? trim($this->request->getPost()['descr']) : false;
+            $title1 = urldecode($this->request->getGet()['fname']) != null ? trim(urldecode($this->request->getGet()['fname'])) : false;
+            $del = isset($this->request->getPost()['delete']) ? true : false;
+            $id = isset($this->request->getGet()['id']) ? true : false;
             $contents =  NewsModel::Instance()->get_descr($title1);
             if($del){
                 NewsModel::Instance()->del($title1);
@@ -50,7 +50,7 @@ class ArticleController extends BaseController
             }
         }
         else{
-            $title1 = urldecode($this->request->get['fname']);
+            $title1 = urldecode($this->request->getGet()['fname']);
             $contents =  NewsModel::Instance()->get_descr($title1);
             $errors = [];
             if(!isset($title1)){
@@ -83,9 +83,9 @@ class ArticleController extends BaseController
              header('Location:/login');
              die;
          }
-         if(count($this->request->post) > 0){
-             $title = trim($this->request->post['title']);
-             $descr = trim($this->request->post['descr']);
+         if(count($this->request->getPost()) > 0){
+             $title = trim($this->request->getPost()['title']);
+             $descr = trim($this->request->getPost()['descr']);
              $istitle = NewsModel::Instance()->uniqTitle($title);
              $errors = NewsModel::Instance()->validate($title,$descr,$istitle);
              if(count($errors) > 0) {
@@ -121,15 +121,15 @@ class ArticleController extends BaseController
             header('Location:/login');
             die;}
 
-            if(urldecode($this->request->get['fname']) == null){
+            if(urldecode($this->request->getGet()['fname']) == null){
                 $this->get404();
             }
         $this->title = "Новость";
-        $contents = NewsModel::Instance()->get_descr(urldecode($this->request->get['fname']));
+        $contents = NewsModel::Instance()->get_descr(urldecode($this->request->getGet()['fname']));
         if(!$contents){
             $this->get404();
         }
-        $this->content = TMP::template('view/v_post.php',['contents' => $contents,'fname' => urldecode($this->request->get['fname'])]);
+        $this->content = TMP::template('view/v_post.php',['contents' => $contents,'fname' => urldecode($this->request->getGet()['fname'])]);
     }
     public function loginAction()
     {
@@ -137,12 +137,12 @@ class ArticleController extends BaseController
             header("Location:/");
             die;
         }
-        if(count($this->request->post) > 0){
-            $name = $this->request->post['name'];
-            $password = $this->request->post['password'];
+        if(count($this->request->getPost()) > 0){
+            $name = $this->request->getPost()['name'];
+            $password = $this->request->getPost()['password'];
             if($name == 'admin' && $password == 'qwerty'){
                 $_SESSION['log'] = true;
-                if(isset($this->request->post['remember'])){
+                if(isset($this->request->getPost()['remember'])){
                     setcookie('name',hash('sha256','admin'),time() + 3600 * 24 * 7 ,'/');
                     setcookie('password',hash('sha256','qwerty'),time() + 3600 * 24 * 7 ,'/');
                 }

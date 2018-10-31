@@ -26,35 +26,25 @@ class NewsModel extends MainModel
 
 public function news_update($title, $descr, $title1)
     {
-        $queryu = $this->db->prepare("UPDATE mynews SET  {$this->pk}='$title' , descr='$descr' WHERE {$this->pk} = '$title1'");
-        $queryu->execute();
-        if ($queryu->errorCode() != \PDO::ERR_NONE) {
-            $info = $queryu->errorInfo();
-            echo implode('<br>', $info);
-            die();
-        }
-        return $this->db->lastInsertId();
+        $table = $this->table;
+        $where = $this->pk  . '= ' . "'$title1'";
+        $object = ['descr' => $descr, 'title' => $title];
+        return $this->db->update($table,$object,$where);
     }
+
+
 
 public function add($title, $descr)
     {
-        $query = $this->db->prepare("INSERT INTO {$this->table} ({$this->pk},descr) VALUES('$title', '$descr')");
-        $query->execute();
-        if ($query->errorCode() != \PDO::ERR_NONE) {
-            $info = $query->errorInfo();
-            echo implode('<br>', $info);
-            die();
-        } else {
-            return $this->db->lastInsertId();
-        }
+        $table = $this->table;
+        $object = ['descr' => $descr, $this->pk => $title];
+        return $this->db->insert($table,$object);
+
     }
 
 public function uniqTitle($title)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE {$this->pk} = \"$title\" ";
-        $query2 = $this->db->prepare($sql);
-        $query2->execute();
-        $res = $query2->fetch();
+        $res = $this->db->query("SELECT * FROM {$this->table} WHERE {$this->pk} = \"$title\" ");
         $istitle = false;
         if (!$res) {
             return $istitle = true;

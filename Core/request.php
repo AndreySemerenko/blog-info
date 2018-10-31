@@ -6,10 +6,26 @@ class Request
 {
     CONST METHOD_GET = 'GET';
     CONST METHOD_POST = 'POST';
-    public $get;
-    public $post;
-    public $server;
-    public $rout;
+    private $get;
+    private $post;
+    private $server;
+    private $rout;
+    public function getGet()
+    {
+        return $this->get;
+    }
+    public function getPost()
+    {
+        return $this->post;
+    }
+    public function getServer()
+    {
+        return $this->server;
+    }
+    public function getRout()
+    {
+        return $this->rout;
+    }
 
     public function __construct(array $get, array $post, array $server)
     {

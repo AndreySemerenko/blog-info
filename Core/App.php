@@ -25,7 +25,7 @@ class App
 
     private function getParamByRequest()
     {
-        return isset($this->routs()[$this->request->rout])? $this->routs()[$this->request->rout]: false;
+        return isset($this->routs()[$this->request->getRout()])? $this->routs()[$this->request->getRout()]: false;
     }
     private function getParamByParams($rout)
     {
